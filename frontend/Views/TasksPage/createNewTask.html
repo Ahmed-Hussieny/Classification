@@ -1,0 +1,124 @@
+<header ng-include src="'Views/Header/header.html'"></header>
+
+<div class="col-md-8 mx-auto mt-3" ng-init="getAlltypes()">
+  <div class="container">
+    <form
+      name="taskForm"
+      ng-submit="submitForm(taskForm)"
+      enctype="multipart/form-data"
+      class="container m-auto border shadow p-3 rounded-4 bg-white h-100"
+      enctype="multipart/form-data"
+      novalidate
+    >
+      <h3>Create New Task</h3>
+      <div ng-if="errorAddTaskMessage || successAddTaskMessage">
+        <p
+          class="alert"
+          ng-class="{
+            'alert-danger': errorAddTaskMessage,
+            'alert-success': successAddTaskMessage
+          }"
+        >
+          {{ errorAddTaskMessage || successAddTaskMessage }}
+        </p>
+      </div>
+      <div>
+        <label for="name">Task Name:</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          name="name"
+          ng-model="taskData.name"
+          required
+        />
+        <div
+          class="alert alert-danger my-2"
+          ng-show="taskForm.name.$dirty && taskForm.name.$error.required"
+        >
+          <span>Task Name is required.</span>
+        </div>
+      </div>
+
+      <div class="my-3">
+        <label for="type">Task Type:</label>
+        <select
+          id="type"
+          class="form-control"
+          name="type"
+          ng-model="taskData.type"
+          ng-change="getLabelsForType()"
+          required
+        >
+          <option value="">Select a task type</option>
+          <option ng-repeat="type in taskTypes" value="{{type.id}}">
+            {{type.name}}
+          </option>
+        </select>
+        <div
+          class="alert alert-danger"
+          ng-show="taskForm.type.$dirty && taskForm.type.$error.required"
+        >
+          <span>Task Type is required.</span>
+        </div>
+      </div>
+      <div ng-show="labels && labels.length > 0">
+        <p class="mp0">Labels</p>
+        <div class="form- row border m-1 mb-1 p-1 rounded-3">
+          <div
+            ng-repeat="label in labels"
+            class="bg-warning border me-1 label rounded-pill"
+          >
+            <p class="mp0">{{label.title}}</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div>
+          <label for="zipFile">File:</label>
+          <input
+            type="file"
+            id="zipFile"
+            class="form-control"
+            name="zipFile"
+            file-model="taskData.file"
+            required
+            accept=".zip"
+          />
+
+          <div
+            class="alert alert-danger my-2"
+            ng-show="taskForm.zipFile.$dirty && taskForm.zipFile.$error.required"
+          >
+            <span>zipFile is required.</span>
+          </div>
+        </div>
+        <span
+          class="error"
+          ng-show="taskForm.zipFile.$dirty && taskForm.zipFile.$error.required"
+          >ZIP file is required.</span
+        >
+        <span
+          class="error"
+          ng-show="taskForm.zipFile.$dirty && taskForm.zipFile.$error.accept"
+          >Only ZIP files are allowed.</span
+        >
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-warning w-100 mt-1"
+        ng-disabled="taskForm.$invalid"
+      >
+        Submit
+      </button>
+      <div
+        ng-show="uploadProgress > 0"
+        class="w-100 d-flex align-items-baseline"
+      >
+        <progress class="w-100" max="100" value="{{uploadProgress}}"></progress>
+        <p class="text-center ms-1">{{uploadProgress}}%</p>
+      </div>
+    </form>
+  </div>
+</div>

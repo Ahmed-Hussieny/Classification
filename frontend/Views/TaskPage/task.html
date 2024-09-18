@@ -1,0 +1,111 @@
+<header ng-include src="'Views/Header/header.html'"></header>
+
+<div ng-init="getTask()">
+  <div class="container-fluid mp-0">
+    <div class="alert alert-success successMessage" ng-show="taskCompleted">
+      Task completed! All labels have been assigned.
+    </div>
+    <div class="row border-bottom pb-2 mt-1">
+      <div class="col-md-1">
+        <button
+          ng-click="finish()"
+          class="btn d-flex align-items-center btn-warning w-100"
+        >
+          Save <img src="/Assets/save-file.png" alt="save" />
+        </button>
+      </div>
+      <div class="col-md-11">
+        <div class="progress-container container">
+          <button class="btn my-auto" ng-click="prevImage()">
+            <img
+              width="20px"
+              src="/Assets/left-arrow.png"
+              alt="Previous Image"
+            />
+          </button>
+          <div class="w-100">
+            <div class="input-grou d-flex m-auto col-md-2 input-group-sm mb-1">
+              <input
+                type="number"
+                class="form-control"
+                ng-model="currentImageIndex"
+                ng-change="updateImageIndex(currentImageIndex)"
+                aria-describedby="inputGroup-sizing-sm"
+                title="Current Image Index"
+                placeholder="Enter the current image index"
+              />
+              <span class="input-group-text" id="inputGroup-sizing-sm"
+                >/{{taskData.images.length-1}}</span
+              >
+            </div>
+            <div class="progress-bar-container">
+              <div
+                class="progress-bar"
+                ng-style="{'width': ((currentImageIndex + 1) / taskData.images.length * 100) + '%'}"
+              ></div>
+            </div>
+          </div>
+
+          <button class="btn my-auto" ng-click="nextImage()">
+            <img width="20px" src="/Assets/right-arrow.png" alt="Next Image" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-md-8 taskImageClass">
+        <div class="zoom-container">
+          <img
+            zoom-image
+            class="w-100"
+            ng-src="{{taskData.images[currentImageIndex].url}}"
+            alt="Classification Image"
+          />
+          <div
+            ng-show="taskData.images[currentImageIndex].label"
+            class="centered-label"
+          >
+            <img width="200" src="/Assets/done.png" alt="Completed" />
+            <h2 class="centered-text text-white">
+              {{taskData.images[currentImageIndex].label.title}}
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 sideBar">
+        <div class="text-start">
+          <h6 class="m-0 p-0">Labels :</h6>
+        </div>
+        <div class="labelsClass">
+          <div class="m-0 p-0 g-1 row mx-auto">
+            <div
+              ng-repeat="label in taskData.labels"
+              class="taskItem mx-1 w-auto px-3"
+              ng-click="labelClicked(label)"
+              ng-class="{'bg-green': selectedLabel === label}"
+            >
+              {{label.title}}
+            </div>
+          </div>
+        </div>
+
+        <div class="text-start">
+          <h6 class="m-0 p-0">Classes :</h6>
+          <div class="labelsClass">
+            <div class="m-0 p-0 g-1 row mx-auto">
+              <div
+                ng-if="taskData.images[currentImageIndex].label.title"
+                class="taskItem mx-1 w-auto px-3"
+              >
+                {{taskData.images[currentImageIndex].label.title}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>

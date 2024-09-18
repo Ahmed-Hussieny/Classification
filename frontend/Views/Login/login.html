@@ -1,0 +1,70 @@
+<div class="">
+  <div class="row mp0">
+    <div class="col-md-7 d-none d-lg-block">
+      <div class="loginContainer">
+        <img src="/Assets/korastats.svg" alt="korastatsLogo" />
+      </div>
+    </div>
+    <div class="col-md-5 loginContainer bg-body-secondary">
+      <form
+        name="loginForm"
+        class="formContainer"
+        ng-submit="submitForm(loginForm)"
+        novalidate
+      >
+        <h4 class="text-center my-4">Classification Tool</h4>
+        <div ng-if="errorMessage">
+          <p class="alert alert-danger my-2">{{ errorMessage }}</p>
+        </div>
+        <div class="my-3">
+          <label for="name">Username:</label>
+          <input
+            class="form-control"
+            type="text"
+            id="name"
+            name="name"
+            ng-model="loginData.name"
+            required
+          />
+          <div
+            class="alert alert-danger my-2"
+            ng-show="loginForm.name.$touched && loginForm.name.$invalid"
+          >
+            <span ng-show="loginForm.name.$error.required"
+              >name is required.</span
+            >
+          </div>
+        </div>
+
+        <div>
+          <label for="password">Password:</label>
+          <input
+            class="form-control"
+            type="password"
+            id="password"
+            name="password"
+            ng-model="loginData.password"
+            required
+          />
+          <div
+            class="alert alert-danger my-2"
+            ng-show="loginForm.password.$touched && loginForm.password.$invalid"
+          >
+            <span ng-show="loginForm.password.$error.required"
+              >Password is required.</span
+            >
+          </div>
+        </div>
+        <div class="text-center mt-3">
+          <button
+            class="btn w-100 btn-warning"
+            type="submit"
+            ng-disabled="loginForm.$invalid"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

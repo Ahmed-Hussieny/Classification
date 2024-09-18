@@ -1,0 +1,207 @@
+<header ng-include src="'Views/Header/header.html'"></header>
+
+<div ng-init="getTypes()">
+  <div class="container">
+    <a
+      class="m-3 btn btn-warning fs-6 text-decoration-none"
+      href="#!/createNewType"
+    >
+      Create New Type <img width="25px" src="/Assets/plus.png" alt="plus" />
+    </a>
+  </div>
+
+  <div class="container dFlex">
+    <input
+      class="form-control w-50 m-2"
+      type="text"
+      ng-model="pendingSearchQuery"
+      placeholder="Search by Name"
+    />
+    <div>
+      <button class="btn btn-warning m-2" ng-click="performSearch()">
+        <img width="20px" src="/Assets/search.png" alt="search" />
+      </button>
+      <button ng-click="resetInput()" class="btn btn-danger m-auto">
+        Reset
+      </button>
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    <div class="container">
+      <!-- Table -->
+      <table
+        class="table text-center table-warning table-striped-columns"
+        border="1"
+        width="100%"
+      >
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Labels</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in typesWithLabels">
+            <td
+              class="pointer"
+              ng-click="updateType(item)"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              <a href="">#{{item.id}}</a>
+            </td>
+            <td>{{ item.name }}</td>
+            <td>
+              <div class="mx-1 row border gy-1 mb-1 p-1 rounded-3">
+                <div
+                  ng-repeat="label in item.labels"
+                  class="bg-warning border me-1 label rounded-pill"
+                >
+                  {{label.title}}
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="d-flex justify-content-between">
+        <nav class="col-md-6">
+          <ul class="pagination">
+            <li class="page-item" ng-class="{'disabled': currentPage == 1}">
+              <a class="page-link" href="" ng-click="setPage(1)"><<</a>
+            </li>
+            <li class="page-item" ng-class="{'disabled': currentPage == 1}">
+              <a class="page-link" href="" ng-click="prevPage()"><</a>
+            </li>
+            <li
+              class="page-item"
+              ng-class="{'active': page == currentPage - 1}"
+            >
+              <a class="page-link" href="" ng-click="setPage(page + 1)"
+                >{{currentPage}}/ {{totalPages}}</a
+              >
+            </li>
+            <li
+              class="page-item"
+              ng-class="{'disabled': currentPage == totalPages}"
+            >
+              <a class="page-link" href="" ng-click="nextPage()">></a>
+            </li>
+            <li
+              class="page-item"
+              ng-class="{'disabled': currentPage == totalPages}"
+            >
+              <a class="page-link" href="" ng-click="setPage(totalPages)">>></a>
+            </li>
+          </ul>
+        </nav>
+        <div class="form-group col-md-2 d-flex align-items-center text-start">
+          <label for="rowsPerPage">Rows per page:</label>
+          <select
+            id="rowsPerPage"
+            ng-model="itemsPerPage"
+            ng-options="option for option in rowsPerPageOptions"
+            class="form-control w-auto"
+          ></select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Type</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form ng-submit="submitUpdateType()">
+          <div
+            ng-if="errorUpdateTypeMessage || updateSuccessMessage || successDeleteLabelMessage || errorDeleteLabelMessage"
+          >
+            <p
+              class="alert"
+              ng-class="{
+                    'alert-danger': errorUpdateTypeMessage || errorDeleteLabelMessage,
+                    'alert-success': updateSuccessMessage || successDeleteLabelMessage
+                }"
+            >
+              {{ errorUpdateTypeMessage || updateSuccessMessage ||
+              errorDeleteLabelMessage || successDeleteLabelMessage }}
+            </p>
+          </div>
+          <div class="form-group mb-3">
+            <label for="userName">Name</label>
+            <input
+              type="text"
+              id="userName"
+              class="form-control"
+              ng-model="selectedType.name"
+              required
+            />
+          </div>
+
+          <div class="row m-0 p-0 align-items-center">
+            <div class="col-md-10 p-0 m-0">
+              <input
+                type="text"
+                class="form-control m-0 me-2"
+                ng-model="newLabel"
+                placeholder="Enter label"
+              />
+            </div>
+            <div class="col-md-2">
+              <button
+                type="button"
+                class="btn btn-warning m-auto w-auto"
+                ng-click="addLabel()"
+              >
+                <img src="/Assets/plus.png" width="20px" alt="plus" />
+              </button>
+            </div>
+          </div>
+          <div class="d-flex flex-wrap mb-2">
+            <div
+              class="chip bg-warning d-flex rounded-pill m-1 px-4"
+              ng-repeat="label in selectedType.labels track by $index"
+              ng-class="{'chip--removable': true}"
+            >
+              <p class="p-0 dFlex m-0">{{ label.title }}</p>
+              <p
+                ng-click="removeLabel($index, label)"
+                class="p-0 ms-1 pointer text-danger m-0"
+              >
+                &times;
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          ng-click="submitUpdateType()"
+          class="btn btn-warning"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

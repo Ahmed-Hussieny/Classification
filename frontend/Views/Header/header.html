@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg bg-warning">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img
+        src="/Assets/korastats.svg"
+        alt="Logo"
+        width="30"
+        height="24"
+        class="d-inline-block align-text-top"
+      />
+      KoraStats | Classification Tool
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mt-lg-0 mt-sm-2 mb-lg-0">
+        <li class="nav-item">
+          <a
+            class="nav-link rounded-pill px-4 py-0"
+            ng-class="{ 'active': location === '/tasks' }"
+            aria-current="page"
+            href="#!/tasks"
+          >
+            Tasks
+          </a>
+        </li>
+        <li class="nav-item my-lg-0 my-sm-2">
+          <a
+            class="nav-link rounded-pill mx-lg-2 px-4 py-0"
+            ng-class="{ 'active': location === '/listTypes' }"
+            aria-current="page"
+            href="#!/listTypes"
+          >
+            Types
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link rounded-pill px-4 py-0"
+            ng-class="{ 'active': location === '/users' }"
+            aria-current="page"
+            href="#!/users"
+          >
+            Users
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

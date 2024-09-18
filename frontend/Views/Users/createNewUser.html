@@ -1,0 +1,105 @@
+<header ng-include src="'Views/Header/header.html'"></header>
+
+<div class="mt-5">
+  <div class="container w-50">
+    <form
+      class="border p-3 bg-white rounded-4 h-100"
+      ng-submit="submitUserForm(userForm)"
+      name="userForm"
+      novalidate
+    >
+      <h3 class="mb-3">Add New User</h3>
+      <div ng-if="errorAddUserMessage || successAddUserMessage">
+        <p
+          class="alert"
+          ng-class="{
+                        'alert-danger': errorAddUserMessage,
+                        'alert-success': successAddUserMessage
+                    }"
+        >
+          {{ errorAddUserMessage || successAddUserMessage }}
+        </p>
+      </div>
+
+      <div class="mb-3">
+        <label for="userName" class="form-label">User Name:</label>
+        <input
+          type="text"
+          id="userName"
+          class="form-control"
+          name="name"
+          ng-model="userData.name"
+          placeholder="Enter user name"
+          required
+        />
+        <div
+          class="alert alert-danger mt-2"
+          ng-show="userForm.name.$dirty && userForm.name.$error.required"
+        >
+          <span>User name is required.</span>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="userPassword" class="form-label">Password:</label>
+        <div class="input-grop d-flex align-items-center">
+          <input
+            type="{{ showPassword ? 'text' : 'password' }}"
+            id="userPassword"
+            class="form-control"
+            ng-model="userData.password"
+            placeholder="Enter password"
+            required
+          />
+          <div
+            class="btn-outline-secondary ms-1"
+            type="button"
+            ng-click="showPassword = !showPassword"
+          >
+            <span ng-if="showPassword"
+              ><img width="25px" src="/Assets/hide.png" alt="hide"
+            /></span>
+            <span ng-if="!showPassword"
+              ><img width="25px" src="/Assets/eye.png" alt="eye"
+            /></span>
+          </div>
+        </div>
+        <div
+          class="alert alert-danger mt-2"
+          ng-show="userForm.password.$dirty && userForm.password.$error.required"
+        >
+          <span>Password is required.</span>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="userType" class="form-label">User Type:</label>
+        <select
+          id="userType"
+          class="form-select"
+          ng-model="userData.userType"
+          required
+        >
+          <option value="" disabled selected>Select user type</option>
+          <option value="Admin">Admin</option>
+          <option value="Lead">Lead</option>
+          <option value="Annotator">Annotator</option>
+        </select>
+        <div
+          class="alert alert-danger mt-2"
+          ng-show="userForm.userType.$dirty && userForm.userType.$error.required"
+        >
+          <span>User type is required.</span>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-warning w-100"
+        ng-disabled="userForm.$invalid"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<header ng-include src="'Views/Header/header.html'"></header>
+<div ng-init="getTypes()" class="mt-5">
+  <div class="container w-50">
+    <form
+      class="border p-3 bg-white rounded-4 h-100"
+      ng-submit="submitTypeForm(typeForm)"
+      name="typeForm"
+      novalidate
+    >
+      <h3 class="mb-3">Add New Type</h3>
+      <div ng-if="errorAddTypeMessage || successAddTypeMessage">
+        <p
+          class="alert"
+          ng-class="{
+      'alert-danger': errorAddTypeMessage,
+      'alert-success': successAddTypeMessage
+    }"
+        >
+          {{ errorAddTypeMessage || successAddTypeMessage }}
+        </p>
+      </div>
+
+      <div class="mb-3">
+        <label for="typeName" class="form-label">Type Name:</label>
+        <input
+          type="text"
+          id="typeName"
+          class="form-control"
+          name="name"
+          ng-model="typeData.name"
+          placeholder="Enter type name"
+          required
+        />
+        <div
+          class="alert alert-danger mt-2"
+          ng-show="typeForm.name.$dirty && typeForm.name.$error.required"
+        >
+          <span>Type name is required.</span>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Labels:</label>
+
+        <div class="row mp-0 gy-2 align-items-center">
+          <div class="col-md-10 mp-0">
+            <input
+              type="text"
+              class="form-control m-0 me-2"
+              ng-model="newLabel"
+              placeholder="Enter label"
+            />
+          </div>
+          <div class="col-md-2">
+            <button
+              type="button"
+              class="btn btn-warning flex-grow-1 w-100"
+              ng-click="addLabel()"
+            >
+              <img src="/Assets/plus.png" width="20px" alt="plus" />
+            </button>
+          </div>
+        </div>
+        <div class="d-flex flex-wrap mb-2">
+          <div
+            class="chip bg-warning d-flex rounded-pill m-1 px-4"
+            ng-repeat="label in typeData.labels track by $index"
+            ng-class="{'chip--removable': true}"
+          >
+            <p class="p-0 dFlex m-0">{{ label.title }}</p>
+            <p
+              ng-click="removeLabel($index, label)"
+              class="p-0 ms-1 pointer text-danger m-0"
+            >
+              &times;
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-warning w-100"
+        ng-disabled="typeForm.$invalid"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

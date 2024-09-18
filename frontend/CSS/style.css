@@ -1,0 +1,144 @@
+body {
+  background: #fffefe;
+  --background-color: #ffc107;
+  --text-color: #343131;
+  --card-background-color: rgba(255, 255, 255, 0.015);
+  --card-border-color: rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
+}
+
+.mp0 {
+  margin: 0;
+  padding: 0;
+}
+
+/* header */
+.nav-link:hover {
+  border: #060606 1px solid !important;
+}
+.nav-link.active {
+  border: #060606 1px solid !important;
+  text-align: center;
+}
+/* login Page */
+
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+input {
+  width: 100%;
+}
+.formContainer {
+  width: 70%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.centered-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.centered-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* task Actions */
+
+.successMessage {
+  margin-top: 5px;
+}
+.progress-container {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.progress-bar-container {
+  flex: 1;
+  height: 5px;
+  background: #e0e0e0;
+  margin: 0 10px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #fce303;
+  position: absolute;
+  border-radius: 10px;
+  top: 0;
+  left: 0;
+}
+
+.taskImageClass {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.zoom-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.taskItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border-radius: 15px;
+  border: black 1px solid;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.sideBar {
+  background: #e8e5e5;
+  padding: 10px;
+}
+.bg-green {
+  background-color: green;
+  color: white; /* Optional: to make the text visible on a green background */
+}
+
+
+.sideBar h6 {
+  color: rgb(72, 71, 71);
+  border-bottom: #9d9d9d 1px solid;
+}
+.labelsClass {
+  height: 50% !important;
+  overflow: auto;
+}
+
+.label{
+  font-size: 15px;
+  padding: 0px 10px;
+  width: auto;
+  text-align: center;
+}
+.pointer{
+  cursor: pointer;
+}
+
+.dFlex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,132 @@
+<header ng-include src="'Views/Header/header.html'"></header>
+
+<div ng-init="getTasks()">
+  <div class="container">
+    <a
+      class="m-3 btn btn-warning fs-6 text-decoration-none"
+      href="#!/createNewTask"
+    >
+      Create New Task <img width="25px" src="/Assets/plus.png" alt="plus" />
+    </a>
+  </div>
+  <div class="row mp0 mt-3 gy-1 align-items-center">
+    <div class="col-md-12">
+      <div class="container">
+        <div class="row border p-2 m-0 gy-1 align-items-center">
+          <div class="col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Filter by Name"
+              ng-model="searchInputName"
+            />
+          </div>
+          <div class="col-md-4">
+            <select
+              id="type"
+              class="form-control"
+              name="type"
+              ng-model="searchInputUser"
+              required
+              title="Select a user"
+            >
+              <option value="">Select User</option>
+              <option ng-repeat="type in tasks" value="{{type.userId.id}}">
+                {{type.userId.name}}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <input
+              type="date"
+              class="form-control"
+              ng-model="searchInputDate"
+              placeholder="Filter by Date"
+            />
+          </div>
+          <div class="col-md-2 d-flex">
+            <button ng-click="applySearch()" class="btn btn-warning m-auto">
+              <img src="/Assets/search.png" width="20px" alt="search" />
+            </button>
+            <button ng-click="resetInput()" class="btn btn-danger m-auto">
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <div class="container row g-4">
+      <div class="col-md-6" ng-repeat="item in tasks ">
+        <div class="row bg-warning dFlex mp-0 border p-2">
+          <div class="col-md-4">
+            <img
+              width="100%"
+              height="60px"
+              src="http://localhost/PHP/koraStatsProject/uploads/{{item.images[0].name}}"
+              alt=""
+            />
+          </div>
+
+          <div class="col-md-6">
+            <p class="m-0">{{item.name}}</p>
+            <p class="m-0" class="pointer" ng-click="goToTask(item)">
+              <a href="">#{{item.id}}</a>
+            </p>
+            <div class="d-flex justify-content-between">
+              <p class="m-0">{{item.typeId.name}}</p>
+              <p class="m-0">{{item.createdAt | date:'yyyy-MM-dd'}}</p>
+            </div>
+          </div>
+          <div class="col-md-2 text-center">
+            <p class="fw-bold">{{item.userId.name}}</p>
+            <p># {{item.images.length}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dFlex justify-content-between">
+        <nav class="col-md-6">
+          <ul class="pagination">
+            <li class="page-item" ng-class="{'disabled': currentPage == 0}">
+              <a class="page-link" href="" ng-click="setPage(0)"><<</a>
+            </li>
+            <li class="page-item" ng-class="{'disabled': currentPage == 0}">
+              <a class="page-link" href="" ng-click="prevPage()"><</a>
+            </li>
+            <li class="page-item" ng-class="{'active': page == currentPage}">
+              <a class="page-link" href="" ng-click="setPage(page)"
+                >{{currentPage + 1}} / {{totalPages}}</a
+              >
+            </li>
+            <li
+              class="page-item"
+              ng-class="{'disabled': currentPage == totalPages -1}"
+            >
+              <a class="page-link" href="" ng-click="nextPage()">></a>
+            </li>
+            <li
+              class="page-item"
+              ng-class="{'disabled': currentPage == totalPages -1}"
+            >
+              <a class="page-link" href="" ng-click="setPage(totalPages - 1)"
+                >>></a
+              >
+            </li>
+          </ul>
+        </nav>
+        <div class="form-group col-md-2 d-flex align-items-center text-start">
+          <label for="rowsPerPage">Rows per page:</label>
+          <select
+            id="rowsPerPage"
+            ng-model="itemsPerPage"
+            ng-options="option for option in rowsPerPageOptions"
+            class="form-control w-auto"
+          ></select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
