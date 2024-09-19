@@ -60,6 +60,7 @@ app.controller("tasksController", [
       TasksService.getAllTasks($scope)
         .then(function (res) {
           $scope.tasks = res.data.data;
+          console.log(res.data.data)
           if (res.data.data) {
             $scope.totalPages = res.data.pagination.total_pages;
           }

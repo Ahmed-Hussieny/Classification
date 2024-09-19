@@ -21,54 +21,33 @@ app.controller("taskController", [
         .then(function (res) {
           console.log(res);
           $scope.taskData = res.data.data;
-          $scope.downloadTaskFile($scope.taskId);
+          console.log($scope.taskData);
+          // $scope.downloadTaskFile($scope.taskId);
+          $scope.taskData.images.forEach((el) => {
+              console.log(el.name);
+              el.url = `http://10.0.0.19:8080/uploads/${el.name}`;
+              el.label = "";
+          });
+
+          if ($scope.taskData.images) {
+            $scope.taskData.images.forEach((image, index) => {
+              if (image.labelId) {
+                $scope.taskData.labels.forEach((label) => {
+                  if (image.labelId === label.id) {
+                    $scope.taskData.images[index].label = label;
+                  }
+                });
+              }
+            });
+          }
+          $scope.selectedLabel = $scope.taskData.images[$scope.currentImageIndex].label;
+          
           $scope.$apply();
           console.log(res.data.data);
         })
         .catch(function (error) {
           console.log(error);
         });
-    };
-
-    $scope.downloadTaskFile = function (taskId) {
-      axios({
-        url: `http://10.0.0.19:8080/index.php/task/downloadTask?taskId=${taskId}`,
-        method: "GET",
-        responseType: "blob",
-      })
-        .then(function (response) {
-          JSZip.loadAsync(response.data).then(function (zip) {
-            Object.keys(zip.files).forEach(function (filename) {
-              zip.files[filename].async("blob").then(function (fileData) {
-                if (filename.endsWith(".jpg") || filename.endsWith(".png")) {
-                  $scope.taskData.images.forEach((el) => {
-                    if (el.name === filename) {
-                      (el.url = URL.createObjectURL(fileData)), (el.label = "");
-                    }
-                  });
-                  if ($scope.taskData.images) {
-                    $scope.taskData.images.forEach((image, index) => {
-                      if (image.labelId) {
-                        $scope.taskData.labels.forEach((label) => {
-                          if (image.labelId === label.id) {
-                            $scope.taskData.images[index].label = label;
-                          }
-                        });
-                      }
-                    });
-                  }
-                  $scope.selectedLabel =
-                    $scope.taskData.images[$scope.currentImageIndex].label;
-                }
-                $scope.$apply();
-              });
-            });
-          });
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-      console.log($scope.images.length);
     };
 
     $scope.nextImage = function () {
