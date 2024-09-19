@@ -1,11 +1,11 @@
 <?php
-define("DB_HOST", "mariadb");
-define("USER_NAME", "root");
-define("PASSWORD", "secret");
-define("DATABASE", "Classification");
+$host = getenv('DB_HOST');
+$user = getenv('DB_USER');
+$password = getenv('DB_PASS');
+$dbname = getenv('DB_NAME');
 
-$conn = mysqli_connect(DB_HOST, USER_NAME, PASSWORD, DATABASE);
+$conn = mysqli_connect($host, $user, $password, $dbname);
 
 if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error() . " (Error code: " . mysqli_connect_errno() . ")");
+    die("Connection failed: " . mysqli_connect_error());
 }

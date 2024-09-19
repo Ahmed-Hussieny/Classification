@@ -1,52 +1,47 @@
-version: '3'
+version: '3.8'
 
 services:
-  web:
-    image: nginx:alpine
+  php-backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: mariadb
+      DB_USER: root
+      DB_PASS: secret
+      DB_NAME: Classification
+    depends_on:
+      - mariadb
+    networks:
+      - dev-env
+  
+  angular_frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
     container_name: angular_frontend
     restart: always
     ports:
-      - "4200:80"
-    volumes:
-      - ./frontend:/usr/share/nginx/html:ro
+      - "80:80"
     depends_on:
-      - phpmyadmin
+      - php-backend
     networks:
       - dev-env
-
-  phpmyadmin:
-    image: phpmyadmin:latest
-    ports:
-      - 8080:80
-    environment:
-      - PMA_ARBITRARY=1
-      - PMA_HOST=mariadb
-    depends_on:
-      - mariadb
-    volumes:
-      - ./backend:/var/www/html
-    networks:
-      - dev-env
-
+  
   mariadb:
     image: mariadb:latest
-    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 'secret'
-      MYSQL_USER: 'root'
-      MYSQL_PASSWORD: 'secret'
-      MYSQL_DATABASE: 'Classification'
-    command: --init-file /docker-entrypoint-initdb.d/init.sql
-    volumes:
-      - mysqldata:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: Classification
     ports:
-      - 3306:3306
+      - "3306:3306"
+    volumes:
+      - ./backend/DB/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - dev-env
 
-volumes:
-  mysqldata: {}
-
 networks:
-  dev-env: {}
+  dev-env:
+    driver: bridge
