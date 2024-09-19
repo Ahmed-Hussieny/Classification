@@ -16,7 +16,7 @@ app.controller("taskController", [
     $scope.getTask = function () {
       axios
         .get(
-          `http://localhost:8080/index.php/task/getSingleTask?id=${$scope.taskId}`
+          `http://10.0.0.19:8080/index.php/task/getSingleTask?id=${$scope.taskId}`
         )
         .then(function (res) {
           console.log(res);
@@ -32,7 +32,7 @@ app.controller("taskController", [
 
     $scope.downloadTaskFile = function (taskId) {
       axios({
-        url: `http://localhost:8080/index.php/task/downloadTask?taskId=${taskId}`,
+        url: `http://10.0.0.19:8080/index.php/task/downloadTask?taskId=${taskId}`,
         method: "GET",
         responseType: "blob",
       })
@@ -110,7 +110,7 @@ app.controller("taskController", [
     $scope.AssignLabelToImage = function (imageId, labelId) {
       axios
         .put(
-          `http://localhost:8080/index.php/image/AssignLabelToImage?imageId=${imageId}&labelId=${labelId}`
+          `http://10.0.0.19:8080/index.php/image/AssignLabelToImage?imageId=${imageId}&labelId=${labelId}`
         )
         .then(function (res) {
           console.log(res);

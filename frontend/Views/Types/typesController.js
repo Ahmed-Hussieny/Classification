@@ -1,7 +1,7 @@
 var TypessController = angular.module("TypesController", []);
 
 app.factory("TypesService", function () {
-  const baseUrl = "http://localhost:8080/index.php";
+  const baseUrl = "http://10.0.0.19:8080/index.php";
 
   return {
     getAllTypesWithLabels: function ($scope) {

@@ -1,7 +1,7 @@
 var TasksController = angular.module("TasksController", []);
 
 app.factory("TasksService", function () {
-  const baseUrl = "http://localhost:8080/index.php";
+  const baseUrl = "http://10.0.0.19:8080/index.php";
 
   return {
     getAllTasks: function ($scope) {
@@ -146,7 +146,7 @@ app.controller("tasksController", [
         formData.append("typeId", $scope.taskData.type);
 
         axios
-          .post(`http://localhost:8080/index.php/task/AddTask`, formData, {
+          .post(`http://10.0.0.19:8080/index.php/task/AddTask`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
             onUploadProgress: function (progressEvent) {
               if (progressEvent.lengthComputable) {

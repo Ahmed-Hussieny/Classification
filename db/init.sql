@@ -32,11 +32,11 @@ CREATE TABLE IF NOT EXISTS labels (
     FOREIGN KEY (typeId) REFERENCES types(id)
 );
 
-CREATE TABLE IF NOT EXISTS images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    taskId INT NOT NULL,
-    labelId INT,
-    FOREIGN KEY (taskId) REFERENCES tasks(id),
-    FOREIGN KEY (labelId) REFERENCES labels(id)
-);
+    CREATE TABLE IF NOT EXISTS images (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        taskId INT NOT NULL,
+        labelId INT,
+        FOREIGN KEY (taskId) REFERENCES tasks(id),
+        FOREIGN KEY (labelId) REFERENCES labels(id)
+    );

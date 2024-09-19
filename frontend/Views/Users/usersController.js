@@ -1,7 +1,7 @@
 var app = angular.module("UsersController", []);
 
 app.factory("UserService", function () {
-  const baseUrl = "http://localhost:8080/index.php/user";
+  const baseUrl = "http://10.0.0.19:8080/index.php/user";
 
   return {
     getAllUsers: function ($scope) {

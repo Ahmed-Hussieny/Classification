@@ -13,7 +13,7 @@ app.controller("loginController", [
     $scope.submitForm = function (form) {
       if (form.$valid) {
         axios
-          .post("http://localhost:8080/index.php/user/login", {
+          .post("http://10.0.0.19:8080/index.php/user/login", {
             name: $scope.loginData.name,
             password: $scope.loginData.password,
           })
